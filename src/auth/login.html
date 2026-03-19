@@ -6,6 +6,66 @@
     <title>Suot | Join the Revolution</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── PASSWORD REQUIREMENTS ── */
+        .pw-rules {
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            display: none; /* shown on focus */
+        }
+        .pw-rules.visible { display: flex; }
+        .pw-rule {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #bbb;
+            transition: color .2s;
+        }
+        .pw-rule .rule-icon {
+            width: 16px; height: 16px; border-radius: 50%;
+            border: 1.5px solid #ddd;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; transition: all .2s;
+        }
+        .pw-rule .rule-icon svg { width: 8px; height: 8px; opacity: 0; transition: opacity .15s; }
+        .pw-rule.met { color: #4A635D; }
+        .pw-rule.met .rule-icon { background: #4A635D; border-color: #4A635D; }
+        .pw-rule.met .rule-icon svg { opacity: 1; }
+
+        /* ── PASSWORD STRENGTH BAR ── */
+        .pw-strength-wrap {
+            margin-top: 10px;
+            display: none;
+        }
+        .pw-strength-wrap.visible { display: block; }
+        .pw-strength-bar {
+            height: 4px; border-radius: 4px;
+            background: #eee; overflow: hidden; margin-bottom: 5px;
+        }
+        .pw-strength-fill {
+            height: 100%; border-radius: 4px;
+            width: 0%; transition: width .3s ease, background .3s ease;
+        }
+        .pw-strength-label {
+            font-size: 11px; font-weight: 700; color: #bbb; text-align: right;
+        }
+
+        /* ── CONFIRM PASSWORD MATCH ── */
+        .pw-match-msg {
+            font-size: 11.5px; font-weight: 600;
+            margin-top: 5px; display: none;
+        }
+        .pw-match-msg.visible { display: block; }
+        .pw-match-msg.ok  { color: #4A635D; }
+        .pw-match-msg.err { color: #c0392b; }
+
+        /* ── GOOGLE BTN ── */
+        .btn-google img { width: 20px !important; border-radius: 2px; }
+    </style>
 </head>
 <body>
 
@@ -51,8 +111,8 @@
 
                         <div class="divider"><span>or</span></div>
 
-                        <button class="btn-google">
-                            <img src="https://cdn2.hubspot.net/hubfs/53/image8-2.jpg" alt="G"> Sign in with Google
+                        <button class="btn-google" id="googleSignInBtn">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G"> Continue with Google
                         </button>
 
                         <p class="toggle-text"><a href="../index.html" style="color:#888;font-weight:400;">← Back to Gallery</a></p>
@@ -72,14 +132,56 @@
                             </div>
                             <div class="input-group">
                                 <label>Email</label>
-                                <input type="email" placeholder="Email address" required>
+                                <input type="email" id="signupEmail" placeholder="Email address" required>
                             </div>
                             <div class="input-group">
                                 <label>Password</label>
-                                <input type="password" placeholder="Create password (min 6 chars)" required>
+                                <input type="password" id="signupPassword" placeholder="Create a strong password" required autocomplete="new-password">
+
+                                <!-- Strength bar -->
+                                <div class="pw-strength-wrap" id="pwStrengthWrap">
+                                    <div class="pw-strength-bar">
+                                        <div class="pw-strength-fill" id="pwStrengthFill"></div>
+                                    </div>
+                                    <div class="pw-strength-label" id="pwStrengthLabel">—</div>
+                                </div>
+
+                                <!-- Requirements checklist -->
+                                <div class="pw-rules" id="pwRules">
+                                    <div class="pw-rule" id="rule-length">
+                                        <div class="rule-icon"><svg viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 3.5 7 9 1"/></svg></div>
+                                        At least 8 characters
+                                    </div>
+                                    <div class="pw-rule" id="rule-upper">
+                                        <div class="rule-icon"><svg viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 3.5 7 9 1"/></svg></div>
+                                        One uppercase letter (A–Z)
+                                    </div>
+                                    <div class="pw-rule" id="rule-number">
+                                        <div class="rule-icon"><svg viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 3.5 7 9 1"/></svg></div>
+                                        One number (0–9)
+                                    </div>
+                                    <div class="pw-rule" id="rule-special">
+                                        <div class="rule-icon"><svg viewBox="0 0 10 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 3.5 7 9 1"/></svg></div>
+                                        One special character (!@#$…)
+                                    </div>
+                                </div>
                             </div>
-                            <button type="submit" class="btn-primary">Create Account</button>
+
+                            <div class="input-group">
+                                <label>Confirm Password</label>
+                                <input type="password" id="signupConfirm" placeholder="Re-enter your password" required autocomplete="new-password">
+                                <div class="pw-match-msg" id="pwMatchMsg"></div>
+                            </div>
+
+                            <button type="submit" class="btn-primary" id="signupBtn">Create Account</button>
                         </form>
+
+                        <div class="divider"><span>or</span></div>
+
+                        <button class="btn-google" id="googleSignUpBtn">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G"> Continue with Google
+                        </button>
+
                         <p class="toggle-text">Already a member? <a href="#" onclick="toggleAuth()">Sign In</a></p>
                     </div>
 
@@ -88,7 +190,6 @@
         </div>
     </div>
 
-    <!-- type="module" is required for the import statement in script.js -->
     <script type="module" src="script.js"></script>
 </body>
 </html>
