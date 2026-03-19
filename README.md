@@ -1,110 +1,132 @@
-# Suot 👗♻️
-> *Style passed on.*
+<div align="center">
 
-Suot is a peer-to-peer fashion swapping platform for the Philippines, built to make sustainable style accessible. Users list pre-loved clothing, earn Pasa-Points, and swap with others in their community — no cash needed.
+<img src="src/auth/Logo/logo.jpg" alt="Suot Logo" width="100" style="border-radius:20px"/>
+
+# Suot
+### *Style passed on.*
+
+A peer-to-peer fashion swapping platform for the Philippines — swap pre-loved clothing, earn Pasa-Points, and build a sustainable wardrobe together.
+
+<br/>
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Leaflet](https://img.shields.io/badge/Leaflet-199900?style=for-the-badge&logo=leaflet&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Gemini_AI-4285F4?style=for-the-badge&logo=google&logoColor=white)
+
+![Status](https://img.shields.io/badge/Status-Active-4A635D?style=flat-square)
+![SDG](https://img.shields.io/badge/SDG_12-Responsible_Consumption-C994A7?style=flat-square)
+![License](https://img.shields.io/badge/License-Academic-EBE0E3?style=flat-square)
+
+</div>
 
 ---
 
-## 🌍 SDG Alignment & Problem Statement
+## The Problem
+
+The fashion industry is one of the world's largest polluters. In the Philippines, fast fashion drives overconsumption while perfectly wearable clothes pile up in landfills. Thrift and swap culture exists — but there's no trusted, gamified, digital space dedicated to it.
 
 **SDG 12 — Responsible Consumption and Production**
 
-The fashion industry is one of the world's largest polluters. In the Philippines, fast fashion drives overconsumption while perfectly wearable clothes end up in landfills. Suot tackles this by creating a circular fashion economy — giving clothes a second life through community-based swapping instead of buying new.
+Suot creates a circular fashion economy, giving clothes a second life through community-based swapping instead of buying new.
 
-**The Problem:**
-- Filipinos discard thousands of clothing items yearly due to changing trends
-- Thrift and swap culture exists but has no dedicated digital platform
-- No accessible, trusted, gamified space for clothing exchange in PH
-
-**Our Solution:**
-A social fashion swap app where users earn and spend *Pasa-Points* to trade items, connect with nearby swappers, and build a sustainable wardrobe together.
-
----
-
-## 🛠 Tech Stack
-
-| Layer | Technology |
+| Pain Point | How Suot Solves It |
 |---|---|
-| Frontend | HTML5, CSS3, Vanilla JavaScript (ES Modules) |
-| Backend / Database | [Supabase](https://supabase.com) (PostgreSQL + Auth + Storage + Realtime) |
-| Maps | [Leaflet.js](https://leafletjs.com) + OpenStreetMap + Nominatim |
-| AI Pricing | Google Gemini API (`gemini-2.0-flash`) |
-| Fonts | Google Fonts (Great Vibes, Playfair Display, DM Sans, Inter) |
-| Hosting | GitHub Pages / any static host |
+| Clothes discarded due to trends | List and swap instead of throw away |
+| No dedicated swap platform in PH | Purpose-built for Filipino swappers |
+| Buying pre-loved feels risky | OTP verification + user ratings |
+| Sustainability feels inaccessible | Gamified points make it fun |
 
 ---
 
+## Features
 
-## ⚙️ How to Run / Install (For Developers)
-
-### Prerequisites
-- A [Supabase](https://supabase.com) account and project
-- A [Google AI Studio](https://aistudio.google.com) API key (for AI pricing feature)
-- Any static file server (VS Code Live Server, `npx serve`, etc.)
-
-### 1. Clone the repo
-```bash
-git clone https://github.com/yourusername/suot.git
-cd suot
-```
-
-### 2. Configure Supabase
-Open `src/db/supabase.js` and replace the placeholder values:
-```js
-const SUPABASE_URL = 'https://your-project.supabase.co'
-const SUPABASE_ANON_KEY = 'your-anon-key-here'
-```
-
-### 3. Configure Gemini AI (optional)
-In `src/personal/` create a `config.js` file:
-```js
-const CONFIG = {
-  GEMINI_API_KEY: 'your-gemini-api-key-here'
-}
-```
-
-### 4. Set up Supabase tables
-Run the SQL migrations in `docs/documents/supabase-schema.sql` in your Supabase SQL editor.
-
-Required tables:
-- `profiles` — user info, pts balance
-- `items` — listed clothing items
-- `swaps` — swap requests and status
-- `messages` — chat between users
-- `wishlist` — saved items
-- `follows` — follower/following relationships
-- `notifications` — in-app alerts
-- `wallet_events` — points transaction history
-- `stories` — 24-hour community stories
-
-Required Storage buckets:
-- `item-images` — set to **Public**
-- `post-images` — set to **Public**
-
-### 5. Run the app
-```bash
-# Using VS Code Live Server — right-click src/auth/login.html → Open with Live Server
-# Or using npx:
-npx serve src
-```
-
-Then open `http://localhost:3000/auth/login.html`
-
- 
-## ✨ Key Features
-
-- **Swap System** — Send item-for-item, item + points, or points-only offers
+- **Swap System** — Item-for-item, item + points, or points-only offers
 - **Pasa-Points Wallet** — Capped at 2,500 pts with auto-refilling circulation buffer
-- **Community Feed** — Post OOTDs, stories, and linked items with reactions & comments
-- **Meetup Map** — Leaflet-powered pin for setting swap meetup locations
+- **Community Feed** — OOTDs, stories, and linked items with reactions and comments
+- **Meetup Map** — Leaflet-powered pin for preferred swap meetup locations
 - **AI Price Suggester** — Gemini API recommends fair Pasa-Points pricing
-- **Real-time Messaging** — Supabase Realtime powered chat with swap cards
+- **Real-time Messaging** — Live chat with swap offer cards built in
 - **OTP Swap Confirmation** — 4-digit code exchange to confirm physical swaps
 - **Friends & Discovery** — Follow system with online presence indicators
 
 ---
 
+## Tech Stack
 
-## 📄 License
+| Layer | Technology |
+|---|---|
+| Frontend | HTML5, CSS3, Vanilla JS (ES Modules) |
+| Backend / Database | [Supabase](https://supabase.com) — PostgreSQL, Auth, Storage, Realtime |
+| Maps | [Leaflet.js](https://leafletjs.com) + OpenStreetMap + Nominatim |
+| AI Pricing | Google Gemini API `gemini-2.0-flash` |
+| Fonts | Google Fonts — Great Vibes, Playfair Display, DM Sans |
 
-This project was built for academic purposes. All rights reserved © 2025 Suot Team.
+---
+
+## Project Structure
+
+```
+Suot_Web/
+├── README.md
+├── docs/
+│   ├── diagrams/          # ERD, system architecture, user flow
+│   └── documents/         # Technical spec, project proposal
+└── src/
+    ├── auth/              # Login & register
+    ├── dashboard/         # Catalog, wallet, top-up
+    ├── personal/          # Home, messages, post-item, item-detail, wishlist, friends
+    ├── profile/           # User profile
+    └── db/                # Supabase client & all DB helpers
+```
+
+---
+
+## How to Run / Install (For Developers)
+
+### Prerequisites
+- [Supabase](https://supabase.com) account and project
+- [Google AI Studio](https://aistudio.google.com) API key *(for AI pricing)*
+- VS Code with Live Server extension
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/Jamaica81828282/Suot_Web.git
+cd Suot_Web
+```
+
+### 2. Configure Supabase
+Open `src/db/supabase.js` and replace:
+```js
+const SUPABASE_URL = 'https://your-project.supabase.co'
+const SUPABASE_ANON_KEY = 'your-anon-key-here'
+```
+
+### 3. Configure Gemini AI
+Create `src/personal/config.js`:
+```js
+const CONFIG = {
+  GEMINI_API_KEY: 'your-gemini-api-key-here'
+}
+```
+> `config.js` is in `.gitignore` — your key will never be pushed to GitHub.
+
+### 4. Set up Supabase
+Run `docs/documents/supabase-schema.sql` in your Supabase SQL editor.
+
+Required tables: `profiles`, `items`, `swaps`, `messages`, `wishlist`, `follows`, `notifications`, `wallet_events`, `stories`
+
+Required storage buckets *(set to Public)*: `item-images`, `post-images`
+
+### 5. Run
+Right-click `src/auth/login.html` → **Open with Live Server**
+
+ 
+
+<div align="center">
+
+Built for **SYSARCH / CS Finals** &nbsp;·&nbsp; © 2025 Suot Team &nbsp;·&nbsp; Academic Use Only
+
+</div>
