@@ -263,6 +263,16 @@ const googleSignUpBtn  = document.getElementById('googleSignUpBtn')
 if (googleSignInBtn) googleSignInBtn.addEventListener('click', signInWithGoogle)
 if (googleSignUpBtn) googleSignUpBtn.addEventListener('click', signInWithGoogle)
 
+// ── PASSWORD VISIBILITY TOGGLE ─────────────────────────────────
+function togglePw(inputId, btn) {
+    const input = document.getElementById(inputId)
+    if (!input) return
+    const isHidden = input.type === 'password'
+    input.type = isHidden ? 'text' : 'password'
+    btn.querySelector('.eye-open').style.display  = isHidden ? 'none'  : ''
+    btn.querySelector('.eye-closed').style.display = isHidden ? '' : 'none'
+}
+window.togglePw = togglePw
 
 // ── AUTH STATE: redirect if already logged in ──────────────────
 supabase.auth.getSession().then(({ data: { session } }) => {
